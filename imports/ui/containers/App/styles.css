@@ -1,0 +1,134 @@
+/* To-Do List */
+/*-----------------------------------------*/
+
+#root {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.todo-list {
+  align-self: center;
+  background-color: white;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.todo-list h1 {
+  background-color: #a071b8;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: white;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+.todo-list li {
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+  font-size: 1.25rem;
+  padding: 1rem;
+  align-items: flex-start;
+}
+
+.todo-list li span {
+  flex: 1 0 60%;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  margin-top: 0.33333rem;
+}
+
+.todo-list li input[type="checkbox"] {
+  display: none;
+}
+
+.todo-list li input[type="checkbox"] + label:before {
+  display: inline-block;
+  color: #c2c2c2;
+  content: "\f10c";
+  cursor: pointer;
+  font-family: FontAwesome;
+  letter-spacing: 1rem;
+  margin-left: 1rem;
+}
+
+.todo-list li input[type="checkbox"] + label:hover::before {
+  color: #4ccbb0;
+}
+
+.todo-list li input[type="checkbox"]:checked + label:before {
+  color: #4ccbb0;
+  content: "\f05d";
+}
+
+.todo-list li button {
+  background: transparent;
+  border: 0;
+  color: #c2c2c2;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0;
+}
+
+.todo-list li button:hover {
+  color: #fa4f4f;
+}
+
+.add-todo {
+  background-color: #c2c2c2;
+  padding: 1rem;
+}
+
+.add-todo form {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-todo form input[type="text"] {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #8f8f8f;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.33333rem;
+}
+
+.add-todo form input[type="text"]:focus {
+  border-bottom-color: #a071b8;
+}
+
+.add-todo form span {
+  color: #8f8f8f;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-align: right;
+}
+
+.todo-admin {
+  align-items: center;
+  display: flex;
+  font-size: 0.9rem;
+  justify-content: space-between;
+  min-height: 68px;
+  padding: 1rem;
+}
+
+.todo-admin div span {
+  color: #c2c2c2;
+}
+
+.todo-admin button {
+  background-color: transparent;
+  border: 1px solid #a071b8;
+  color: #a071b8;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.16667rem 0.33333rem;
+}
+
+.todo-admin button:hover {
+  border: 1px solid #4ccbb0;
+  color: #4ccbb0;
+}
