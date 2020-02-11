@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ToDoCount = ({ number }) => {
-  return <span>{number > 1 ? `Todos: ${number}` : `Todo: ${number}`}</span>;
+  return <span>{number > 0 ? `Todos: ${number}` : `There are no todos`}</span>;
 };
 
 ToDoCount.propTypes = {

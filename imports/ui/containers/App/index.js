@@ -12,11 +12,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      todos: [],
-      lastId: -1
-    };
-
     this.toDoInput = React.createRef();
   }
 
@@ -24,26 +19,23 @@ class App extends React.Component {
     this.toDoInput.current.focus();
   }
 
-  toggleComplete = item => {
-    let todos = this.state.todos.map(todo => {
-      if (todo.id === item.id) todo.complete = !todo.complete;
-      return todo;
+  toggleComplete = todo => {
+    ToDos.update(todo._id, {
+      $set: { complete: !todo.complete }
     });
-    this.setState({ todos });
   };
 
-  removeTodo = item => {
-    let todos = this.state.todos.filter(todo => todo.id !== item.id);
-    this.setState({ todos });
+  removeTodo = todo => {
+    ToDos.remove(todo._id);
   };
 
   removeCompleted = () => {
-    let todos = this.state.todos.filter(todo => !todo.complete);
+    let todos = this.props.todos.filter(todo => !todo.complete);
     this.setState({ todos });
   };
 
   hasCompleted = () => {
-    let hasCompleted = this.state.todos.filter(todo => todo.complete);
+    let hasCompleted = this.props.todos.filter(todo => todo.complete);
     return hasCompleted.length > 0 ? true : false;
   };
 
@@ -52,9 +44,9 @@ class App extends React.Component {
     let toDoInput = this.toDoInput.current;
 
     if (toDoInput.value) {
-      const id = this.state.lastId + 1;
+      const id = this.props.lastId + 1;
       const newToDo = [
-        ...this.state.todos,
+        ...this.props.todos,
         { id, title: toDoInput.value, complete: false }
       ];
       this.setState({ lastId: id, todos: newToDo });
@@ -65,7 +57,7 @@ class App extends React.Component {
 
   render() {
     console.log(this.props);
-    let { todos } = this.state;
+    let { todos } = this.props;
     let number = todos.length;
     return (
       <div className="todo-list">
@@ -75,7 +67,7 @@ class App extends React.Component {
           {todos.map(todo => {
             return (
               <ToDoItem
-                key={todo.id}
+                key={todo._id}
                 todo={todo}
                 creator="Ivan"
                 toggleComplete={() => {

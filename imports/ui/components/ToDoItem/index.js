@@ -7,11 +7,11 @@ const ToDoItem = ({ todo, toggleComplete, removeTodo }) => {
       {/* Other solution is defaultChecked */}
       <input
         type="checkbox"
-        id={todo.id}
+        id={todo._id}
         checked={todo.complete}
         onChange={toggleComplete}
       />
-      <label htmlFor={todo.id} />
+      <label htmlFor={todo._id} />
       <button onClick={removeTodo}>
         <i className="fa fa-trash" />
       </button>
@@ -21,7 +21,7 @@ const ToDoItem = ({ todo, toggleComplete, removeTodo }) => {
 
 ToDoItem.propTypes = {
   todo: PropTypes.exact({
-    id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     complete: PropTypes.bool.isRequired
   }).isRequired
