@@ -30,8 +30,12 @@ class App extends React.Component {
   };
 
   removeCompleted = () => {
-    let todos = this.props.todos.filter(todo => !todo.complete);
-    this.setState({ todos });
+    const completedTodos = this.props.todos
+      .filter(todo => todo.complete)
+      .map(todo => todo._id);
+    completedTodos.map(_id => {
+      ToDos.remove(_id);
+    });
   };
 
   hasCompleted = () => {
@@ -41,15 +45,11 @@ class App extends React.Component {
 
   addToDo = event => {
     event.preventDefault();
+
     let toDoInput = this.toDoInput.current;
 
     if (toDoInput.value) {
-      const id = this.props.lastId + 1;
-      const newToDo = [
-        ...this.props.todos,
-        { id, title: toDoInput.value, complete: false }
-      ];
-      this.setState({ lastId: id, todos: newToDo });
+      ToDos.insert({ title: toDoInput.value, complete: false });
     }
 
     toDoInput.value = "";
