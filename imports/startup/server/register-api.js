@@ -1,1 +1,1 @@
-import "../../api/todo";
+import "../../api/todos";

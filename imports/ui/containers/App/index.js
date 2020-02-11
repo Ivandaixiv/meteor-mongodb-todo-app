@@ -4,6 +4,8 @@ import ClearButton from "../../components/ClearButton";
 import ToDoCount from "../../components/ToDoCount";
 import ToDoItem from "../../components/ToDoItem";
 import Header from "../../components/Header";
+import { ToDos } from "../../../api/todos";
+import { withTracker } from "meteor/react-meteor-data";
 import "./styles.css";
 
 class App extends React.Component {
@@ -62,6 +64,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     let { todos } = this.state;
     let number = todos.length;
     return (
@@ -93,4 +96,8 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+export default withTracker(() => {
+  return {
+    todos: ToDos.find({}).fetch()
+  };
+})(App);
