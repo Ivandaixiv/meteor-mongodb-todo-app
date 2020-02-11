@@ -4,8 +4,10 @@ import ClearButton from "../../components/ClearButton";
 import ToDoCount from "../../components/ToDoCount";
 import ToDoItem from "../../components/ToDoItem";
 import Header from "../../components/Header";
+import AccountsUIWrapper from "../../components/AccountWrapper";
 import { ToDos } from "../../../api/todos";
 import { withTracker } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
 import "./styles.css";
 
 class App extends React.Component {
@@ -60,29 +62,32 @@ class App extends React.Component {
     let { todos } = this.props;
     let number = todos.length;
     return (
-      <div className="todo-list">
-        <Header title="So Much To Do" />
-        <ToDoInput addToDo={this.addToDo} ref={this.toDoInput} />
-        <ul>
-          {todos.map(todo => {
-            return (
-              <ToDoItem
-                key={todo._id}
-                todo={todo}
-                creator="Ivan"
-                toggleComplete={() => {
-                  this.toggleComplete(todo);
-                }}
-                removeTodo={() => this.removeTodo(todo)}
-              />
-            );
-          })}
-        </ul>
-        <div className="todo-admin">
-          <ToDoCount number={number} />
-          {this.hasCompleted() && (
-            <ClearButton removeCompleted={this.removeCompleted} />
-          )}
+      <div className="appWrapper">
+        <AccountsUIWrapper />
+        <div className="todo-list">
+          <Header title="So Much To Do" />
+          <ToDoInput addToDo={this.addToDo} ref={this.toDoInput} />
+          <ul>
+            {todos.map(todo => {
+              return (
+                <ToDoItem
+                  key={todo._id}
+                  todo={todo}
+                  creator="Ivan"
+                  toggleComplete={() => {
+                    this.toggleComplete(todo);
+                  }}
+                  removeTodo={() => this.removeTodo(todo)}
+                />
+              );
+            })}
+          </ul>
+          <div className="todo-admin">
+            <ToDoCount number={number} />
+            {this.hasCompleted() && (
+              <ClearButton removeCompleted={this.removeCompleted} />
+            )}
+          </div>
         </div>
       </div>
     );
@@ -90,6 +95,8 @@ class App extends React.Component {
 }
 export default withTracker(() => {
   return {
-    todos: ToDos.find({}).fetch()
+    todos: ToDos.find({}).fetch(),
+    userId: Meteor.userId(),
+    user: Meteor.user()
   };
 })(App);
