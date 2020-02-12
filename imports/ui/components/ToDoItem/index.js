@@ -20,7 +20,7 @@ const ToDoItem = ({ todo, toggleComplete, removeTodo }) => {
 };
 
 ToDoItem.propTypes = {
-  todo: PropTypes.exact({
+  todo: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     complete: PropTypes.bool.isRequired

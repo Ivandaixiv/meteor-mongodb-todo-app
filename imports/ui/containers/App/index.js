@@ -47,14 +47,17 @@ class App extends React.Component {
     let toDoInput = this.toDoInput.current;
 
     if (toDoInput.value) {
-      ToDos.insert({ title: toDoInput.value, complete: false });
+      ToDos.insert({
+        title: toDoInput.value,
+        complete: false,
+        owner: this.props.userId
+      });
     }
 
     toDoInput.value = "";
   };
 
   render() {
-    console.log(this.props);
     let { todos } = this.props;
     let number = todos.length;
     return (
