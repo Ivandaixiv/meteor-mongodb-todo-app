@@ -38,15 +38,6 @@ export default class AccountsUIWrapper extends Component {
           <input name="password" type="password" placeholder="Password"></input>
           <button type="submit">Login</button>
         </form>
-        <button
-          onClick={() => {
-            Meteor.logout(error => {
-              console.log(error);
-            });
-          }}
-        >
-          Logout
-        </button>
       </div>
     );
   }

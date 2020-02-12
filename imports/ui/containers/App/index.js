@@ -17,10 +17,6 @@ class App extends React.Component {
     this.toDoInput = React.createRef();
   }
 
-  componentDidMount() {
-    this.toDoInput.current.focus();
-  }
-
   toggleComplete = todo => {
     ToDos.update(todo._id, {
       $set: { complete: !todo.complete }
@@ -63,32 +59,44 @@ class App extends React.Component {
     let number = todos.length;
     return (
       <div className="appWrapper">
-        <AccountsUIWrapper />
-        <div className="todo-list">
-          <Header title="So Much To Do" />
-          <ToDoInput addToDo={this.addToDo} ref={this.toDoInput} />
-          <ul>
-            {todos.map(todo => {
-              return (
-                <ToDoItem
-                  key={todo._id}
-                  todo={todo}
-                  creator="Ivan"
-                  toggleComplete={() => {
-                    this.toggleComplete(todo);
-                  }}
-                  removeTodo={() => this.removeTodo(todo)}
-                />
-              );
-            })}
-          </ul>
-          <div className="todo-admin">
-            <ToDoCount number={number} />
-            {this.hasCompleted() && (
-              <ClearButton removeCompleted={this.removeCompleted} />
-            )}
+        {!this.props.userId ? (
+          <AccountsUIWrapper />
+        ) : (
+          <div className="todo-list">
+            <Header title="So Much To Do" />
+            <ToDoInput addToDo={this.addToDo} ref={this.toDoInput} />
+            <ul>
+              {todos.map(todo => {
+                return (
+                  <ToDoItem
+                    key={todo._id}
+                    todo={todo}
+                    creator="Ivan"
+                    toggleComplete={() => {
+                      this.toggleComplete(todo);
+                    }}
+                    removeTodo={() => this.removeTodo(todo)}
+                  />
+                );
+              })}
+            </ul>
+            <div className="todo-admin">
+              <button
+                onClick={() => {
+                  Meteor.logout(error => {
+                    console.log(error);
+                  });
+                }}
+              >
+                Logout
+              </button>
+              {this.hasCompleted() && (
+                <ClearButton removeCompleted={this.removeCompleted} />
+              )}
+              <ToDoCount number={number} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
