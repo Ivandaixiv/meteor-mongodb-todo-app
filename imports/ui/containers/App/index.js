@@ -18,22 +18,28 @@ class App extends React.Component {
   }
 
   toggleComplete = todo => {
-    ToDos.update(todo._id, {
-      $set: { complete: !todo.complete }
-    });
+    Meteor.call("todos.toggleComplete", todo);
+    // Before meteor method
+    // ToDos.update(todo._id, {
+    //   $set: { complete: !todo.complete }
+    // });
   };
 
   removeTodo = todo => {
-    ToDos.remove(todo._id);
+    Meteor.call("todos.removeToDo", todo);
+    // Before meteor method
+    // ToDos.remove(todo._id);
   };
 
   removeCompleted = () => {
-    const completedTodos = this.props.todos
-      .filter(todo => todo.complete)
-      .map(todo => todo._id);
-    completedTodos.map(_id => {
-      ToDos.remove(_id);
-    });
+    Meteor.call("todos.removeCompleted");
+    // Before meteor method
+    // const completedTodos = this.props.todos
+    //   .filter(todo => todo.complete)
+    //   .map(todo => todo._id);
+    // completedTodos.map(_id => {
+    //   ToDos.remove(_id);
+    // });
   };
 
   hasCompleted = () => {
@@ -43,18 +49,17 @@ class App extends React.Component {
 
   addToDo = event => {
     event.preventDefault();
-
-    let toDoInput = this.toDoInput.current;
-
-    if (toDoInput.value) {
-      ToDos.insert({
-        title: toDoInput.value,
-        complete: false,
-        owner: this.props.userId
-      });
-    }
-
-    toDoInput.value = "";
+    let title = this.toDoInput.current.value;
+    Meteor.call("todos.addToDo", title);
+    // Before meteor method
+    // if (toDoInput.value) {
+    //   ToDos.insert({
+    //     title: toDoInput.value,
+    //     complete: false,
+    //     owner: this.props.userId
+    //   });
+    // }
+    this.toDoInput.current.value = "";
   };
 
   render() {
@@ -105,6 +110,8 @@ class App extends React.Component {
   }
 }
 export default withTracker(() => {
+  Meteor.subscribe("todos");
+
   return {
     todos: ToDos.find({}).fetch(),
     userId: Meteor.userId(),
